@@ -1,15 +1,16 @@
 package tools.xmljsonconverter;
 
+/* This class checks if the file provided is valid and what
+ * extension it has (xml or json)
+ */
+
 public class ExtensionCheck {
 	public static String getExtension(String file) {
-		if(file == "exit") {
-			System.out.println("exit");
-			return "exit";
-		} else if(file.indexOf(".") == -1) {
+		
+		if(file.indexOf(".") == -1) {
 			return "error";
 		} else {
-			return file.substring(file.length() - 3,
-					file.length());				
+			return file.substring(file.indexOf("."), file.length());				
 		}
 	}
 }
