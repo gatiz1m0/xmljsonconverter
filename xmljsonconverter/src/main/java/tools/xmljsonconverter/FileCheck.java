@@ -4,7 +4,7 @@ package tools.xmljsonconverter;
  * extension it has (xml or json)
  */
 
-public class ExtensionCheck {
+public class FileCheck {
 	public static String getExtension(String file) {
 		
 		if(file.indexOf(".") == -1) {
@@ -12,5 +12,10 @@ public class ExtensionCheck {
 		} else {
 			return file.substring(file.indexOf("."), file.length());				
 		}
+	}
+	
+	public static String getFileName(String file) {
+
+		return file.substring(file.lastIndexOf("/") + 1, file.indexOf("."));
 	}
 }
