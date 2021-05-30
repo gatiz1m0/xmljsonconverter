@@ -52,7 +52,7 @@ public class XJconverter
 	          	//System.out.println(fileContent);
 	          	String jsonString = XmlToJson.xml2json(fileContent);
 	          	System.out.println(jsonString);
-	          	afterOptions(jsonString);
+	          	afterOptions(jsonString, "json");
             }
             else if(typeOfFile.equals(".json")) {
             	// Get the file name only no extension
@@ -66,7 +66,7 @@ public class XJconverter
 	          	//System.out.println(fileContent);
 	          	String xmlString = JsonToXml.json2xml(fileContent);
 	          	System.out.println(xmlString);
-	          	afterOptions(xmlString);
+	          	afterOptions(xmlString, "xml");
            } else {
         	   System.out.println("> File extension is needed.");
            }         	
@@ -91,8 +91,9 @@ public class XJconverter
         return fileContent;
     }
     
-    private static void afterOptions(String resultString) throws IOException {
+    private static void afterOptions(String resultString, String fileType) throws IOException {
     	System.out.println("Type 'r' to return to main menu");
+    	System.out.println("Type 'v' to validate file");
     	System.out.println("or to save file enter path: ");
     	Scanner scan = new Scanner(System.in);
     	String option = "";
@@ -103,8 +104,13 @@ public class XJconverter
     		if(option.equals("r")) {
     			confirmation = true;
     			initialInput();
+    		} else if (option.equals("v") && fileType == "xml"){
+    			// Validate xml
+    			XmlSchemaValidation.validateXMLSchema(resultString);
+    		} else if (option.equals("v") && fileType == "json"){
+    			// Validate json
     		} else {
-    			// Write to file
+    			// Save file
     		}
     	}
     }
