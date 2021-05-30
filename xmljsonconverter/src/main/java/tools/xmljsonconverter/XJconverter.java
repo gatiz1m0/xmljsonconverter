@@ -10,7 +10,7 @@ import java.util.Scanner;
  *  This is the main file
  */
 
-public class xjconverter 
+public class XJconverter 
 {
     public static void main( String[] args ) throws IOException
     { 	
