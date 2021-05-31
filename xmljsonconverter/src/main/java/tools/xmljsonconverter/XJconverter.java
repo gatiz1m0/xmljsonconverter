@@ -2,8 +2,12 @@ package tools.xmljsonconverter;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 /*
@@ -42,7 +46,7 @@ public class XJconverter
 	        // What type of file we have?
             if(typeOfFile.equals(".xml")) {
             	// Get the file name only no extension
-	          	String nameOfFile = FileCheck.getFileName(fileName);
+	          	String nameOfFile = FileCheck.getPath(fileName);
 	          	System.out.println("> \"" + nameOfFile + "\" XML file converted to JSON: ");
 	          	// Change flag
 	          	validateInput = false;	
@@ -56,8 +60,8 @@ public class XJconverter
             }
             else if(typeOfFile.equals(".json")) {
             	// Get the file name only no extension
-	          	String nameOfFile = FileCheck.getFileName(fileName);
-            	System.out.println("> \"" + nameOfFile + "\" JSON converted to XML: ");
+	          	String nameOfFile = FileCheck.getPath(fileName);
+            	System.out.println("> \"" + nameOfFile + "\" json converted to xml and saved in same directory: ");
 	          	// Change flag
 	          	validateInput = false;
 	          	
@@ -65,7 +69,8 @@ public class XJconverter
 	          	String fileContent = readFile(fileName); 
 	          	//System.out.println(fileContent);
 	          	String xmlString = JsonToXml.json2xml(fileContent);
-	          	System.out.println(xmlString);
+	          	//System.out.println(xmlString);
+	          	saveFile(xmlString, nameOfFile, "xml");
 	          	afterOptions(xmlString, "xml");
            } else {
         	   System.out.println("> File extension is needed.");
@@ -94,7 +99,7 @@ public class XJconverter
     private static void afterOptions(String resultString, String fileType) throws IOException {
     	System.out.println("Type 'r' to return to main menu");
     	System.out.println("Type 'v' to validate file");
-    	System.out.println("or to save file enter path: ");
+    	
     	Scanner scan = new Scanner(System.in);
     	String option = "";
     	Boolean confirmation = false;
@@ -113,5 +118,15 @@ public class XJconverter
     			// Save file
     		}
     	}
+    	scan.close();
+    }
+    
+    private static String saveFile(String fileContent, String fileName, String type) throws IOException {
+    	String path = fileName + "." + type;
+    	 
+    	FileOutputStream outFile = new FileOutputStream(path);	 
+    	outFile.write(fileContent.getBytes());
+    	outFile.close();
+    	return "File saved";
     }
 }

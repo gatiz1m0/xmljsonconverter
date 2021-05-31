@@ -14,8 +14,8 @@ public class FileCheck {
 		}
 	}
 	
-	public static String getFileName(String file) {
+	public static String getPath(String file) {
 
-		return file.substring(file.lastIndexOf("/") + 1, file.indexOf("."));
+		return file.substring(0, file.indexOf("."));
 	}
 }
