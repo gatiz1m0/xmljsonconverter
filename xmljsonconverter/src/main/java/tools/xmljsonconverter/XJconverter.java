@@ -45,7 +45,7 @@ public class XJconverter
 	        
 	        // What type of file we have?
             if(typeOfFile.equals(".xml")) {
-            	// Get the file name only no extension
+            	// Get the file path only no extension
 	          	String nameOfFile = FileCheck.getPath(fileName);
 	          	System.out.println("> \"" + nameOfFile + "\" XML file converted to JSON: ");
 	          	// Change flag
@@ -55,7 +55,8 @@ public class XJconverter
 	          	String fileContent = readFile(fileName); 
 	          	//System.out.println(fileContent);
 	          	String jsonString = XmlToJson.xml2json(fileContent);
-	          	System.out.println(jsonString);
+	          	//System.out.println(jsonString);
+	          	System.out.println(saveFile(jsonString, nameOfFile, "json"));
 	          	afterOptions(jsonString, "json");
             }
             else if(typeOfFile.equals(".json")) {
@@ -70,7 +71,7 @@ public class XJconverter
 	          	//System.out.println(fileContent);
 	          	String xmlString = JsonToXml.json2xml(fileContent);
 	          	//System.out.println(xmlString);
-	          	saveFile(xmlString, nameOfFile, "xml");
+	          	System.out.println(saveFile(xmlString, nameOfFile, "xml"));
 	          	afterOptions(xmlString, "xml");
            } else {
         	   System.out.println("> File extension is needed.");
@@ -123,10 +124,17 @@ public class XJconverter
     
     private static String saveFile(String fileContent, String fileName, String type) throws IOException {
     	String path = fileName + "." + type;
-    	 
-    	FileOutputStream outFile = new FileOutputStream(path);	 
-    	outFile.write(fileContent.getBytes());
-    	outFile.close();
-    	return "File saved";
+    	if(type == "xml") { // Is to be xml file
+	    	String fileEncoded = ("<?xml version = \"1.0\" encoding = \"ISO-8859-1\" ?>").concat(fileContent);
+	    	//System.out.println(fileEncoded);
+	    	FileOutputStream outFile = new FileOutputStream(path);	 
+	    	outFile.write(fileEncoded.getBytes());
+	    	outFile.close();
+    	} else { // Is to be json file 
+    		FileOutputStream outFile = new FileOutputStream(path);	 
+	    	outFile.write(fileContent.getBytes());
+	    	outFile.close();
+    	}
+    	return "File saved in same directory";
     }
 }
