@@ -47,7 +47,7 @@ public class XJconverter
             if(typeOfFile.equals(".xml")) {
             	// Get the file path only no extension
 	          	String nameOfFile = FileCheck.getPath(fileName);
-	          	System.out.println("> \"" + nameOfFile + "\" XML file converted to JSON: ");
+	          	System.out.println("> \"" + nameOfFile + "\" xml file converted to json format saved at: ");
 	          	// Change flag
 	          	validateInput = false;	
 	          	
@@ -56,13 +56,14 @@ public class XJconverter
 	          	//System.out.println(fileContent);
 	          	String jsonString = XmlToJson.xml2json(fileContent);
 	          	//System.out.println(jsonString);
-	          	System.out.println(saveFile(jsonString, nameOfFile, "json"));
-	          	afterOptions(jsonString, "json");
+	          	String path = saveFile(jsonString, nameOfFile, "json");
+	          	System.out.println(path);
+	          	afterOptions(path, "json");
             }
             else if(typeOfFile.equals(".json")) {
             	// Get the file name only no extension
 	          	String nameOfFile = FileCheck.getPath(fileName);
-            	System.out.println("> \"" + nameOfFile + "\" json converted to xml and saved in same directory: ");
+            	System.out.println("> \"" + nameOfFile + "\" json converted to xml format saved at: ");
 	          	// Change flag
 	          	validateInput = false;
 	          	
@@ -71,8 +72,9 @@ public class XJconverter
 	          	//System.out.println(fileContent);
 	          	String xmlString = JsonToXml.json2xml(fileContent);
 	          	//System.out.println(xmlString);
-	          	System.out.println(saveFile(xmlString, nameOfFile, "xml"));
-	          	afterOptions(xmlString, "xml");
+	          	String path = saveFile(xmlString, nameOfFile, "xml");
+	          	System.out.println(path);
+	          	afterOptions(path, "xml");
            } else {
         	   System.out.println("> File extension is needed.");
            }         	
@@ -97,7 +99,7 @@ public class XJconverter
         return fileContent;
     }
     
-    private static void afterOptions(String resultString, String fileType) throws IOException {
+    private static void afterOptions(String path, String fileType) throws IOException {
     	System.out.println("Type 'r' to return to main menu");
     	System.out.println("Type 'v' to validate file");
     	
@@ -107,16 +109,15 @@ public class XJconverter
     	
     	while(!confirmation) {
     		option = scan.nextLine().trim();
-    		if(option.equals("r")) {
+    		if(option.equals("r")) { // Return to main menu
     			confirmation = true;
     			initialInput();
-    		} else if (option.equals("v") && fileType == "xml"){
+    		} else if (option.equals("v") && fileType == "xml"){ // Or validate
     			// Validate xml
-    			XmlSchemaValidation.validateXMLSchema(resultString);
-    		} else if (option.equals("v") && fileType == "json"){
-    			// Validate json
-    		} else {
-    			// Save file
+    			XmlSchemaValidation.validateXML(path);
+    		} else { 
+    			// Validate the json file
+    			JsonSchemaValidation.validateJson(path);
     		}
     	}
     	scan.close();
@@ -130,11 +131,11 @@ public class XJconverter
 	    	FileOutputStream outFile = new FileOutputStream(path);	 
 	    	outFile.write(fileEncoded.getBytes());
 	    	outFile.close();
-    	} else { // Is to be json file 
+    	} else { // Is to be a json file 
     		FileOutputStream outFile = new FileOutputStream(path);	 
 	    	outFile.write(fileContent.getBytes());
 	    	outFile.close();
     	}
-    	return "File saved in same directory";
+    	return path;
     }
 }

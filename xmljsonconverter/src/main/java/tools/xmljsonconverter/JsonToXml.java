@@ -13,7 +13,7 @@ public class JsonToXml {
 
 			//Convert json to xml
 			JSONObject json = new JSONObject(jsonFileContent);
-			xmlString = XML.toString(json, "doc");
+			xmlString = XML.toString(json);
 		} catch(JSONException exception) {
 			System.out.println(exception.toString());
 		}
