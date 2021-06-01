@@ -5,10 +5,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Scanner;
+
+import org.everit.json.schema.ValidationException;
 
 /*
  *  This is the main file
@@ -16,7 +15,7 @@ import java.util.Scanner;
 
 public class XJconverter 
 {
-    public static void main( String[] args ) throws IOException
+    public static void main( String[] args ) throws IOException, ValidationException
     { 	
     	initialInput();
     }
@@ -112,12 +111,17 @@ public class XJconverter
     		if(option.equals("r")) { // Return to main menu
     			confirmation = true;
     			initialInput();
-    		} else if (option.equals("v") && fileType == "xml"){ // Or validate
+    		} else if (option.equals("v") && fileType == "xml"){
     			// Validate xml
     			XmlSchemaValidation.validateXML(path);
+    			// Finished, go to main
+    			initialInput();
     		} else { 
     			// Validate the json file
-    			JsonSchemaValidation.validateJson(path);
+    			//System.out.println("last options else");
+    			System.out.println(JsonSchemaValidation.validateJson(path));
+    			// Finished, go to main
+    			initialInput();
     		}
     	}
     	scan.close();

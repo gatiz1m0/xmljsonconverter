@@ -10,24 +10,33 @@ import org.json.JSONTokener;
 
 public class JsonSchemaValidation {
 	
-	public static String validateJson(String path) throws FileNotFoundException {
+	public static ValidationException validateJson(String path) throws ValidationException, FileNotFoundException {
 		//System.out.println("in validate json");
-		String jsonSchemaFile = "jsonSchema.json";
-		System.out.println(jsonSchemaFile);
+		// Json schema file
+		File jsonSchemaFile = new File("jsonSchema.json");
+		//System.out.println(path);
 		
 		JSONTokener schemaFile = new JSONTokener(new FileInputStream(jsonSchemaFile));
 		JSONObject jsonSchema = new JSONObject(schemaFile);
 		
-		// json data
+		// Json file to validate
 		File jsonFile =  new File(path);
 		JSONTokener jsonDataFile = new JSONTokener(new FileInputStream(jsonFile));
 		JSONObject jsonObject = new JSONObject(jsonDataFile);
 		
 		// Validate json file
 		Schema schemaValidator = SchemaLoader.load(jsonSchema);
-		schemaValidator.validate(jsonObject);
 		
-		return "Data has been validated";
-			
+		try {
+			schemaValidator.validate(jsonObject);
+		    return null;
+		} catch (ValidationException e) {
+			if (e.getCausingExceptions().size() > 1) {
+	            e.getCausingExceptions().stream()
+	                .map(ValidationException::getMessage)
+	                .forEach(System.out::println);
+			}
+		    return e;
+		}	
 	}
 }

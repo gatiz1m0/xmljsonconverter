@@ -7,7 +7,7 @@
       "properties": {
         "Contact": {
           "type": "array",
-          "items": [
+          "items": 
             {
               "type": "object",
               "properties": {
@@ -59,7 +59,6 @@
                 "ContactTitle"
               ]
             }
-          ]
         }
       },
       "required": [

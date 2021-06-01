@@ -35,6 +35,7 @@
 	  <artifactId>json</artifactId>
 	  <version>20210307</version>
 	</dependency>
+	
 	<!-- https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema -->
 	<dependency>
 	    <groupId>org.everit.json</groupId>
