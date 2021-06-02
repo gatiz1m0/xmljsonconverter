@@ -17,6 +17,7 @@ public class XJconverter
 {
     public static void main( String[] args ) throws IOException, ValidationException
     { 	
+    	// Show options
     	initialInput();
     }
     
@@ -52,9 +53,8 @@ public class XJconverter
 	          	
 	          	// Parse content
 	          	String fileContent = readFile(fileName); 
-	          	//System.out.println(fileContent);
+	          	
 	          	String jsonString = XmlToJson.xml2json(fileContent);
-	          	//System.out.println(jsonString);
 	          	String path = saveFile(jsonString, nameOfFile, "json");
 	          	System.out.println(path);
 	          	afterOptions(path, "json");
@@ -89,9 +89,7 @@ public class XJconverter
         String line, fileContent = "";
 
         while((line = reader.readLine()) != null) {
-        	//System.out.println(line);
         	fileContent = fileContent.concat(line);
-        	//System.out.println(line);
         }
         reader.close();
         
@@ -118,7 +116,6 @@ public class XJconverter
     			initialInput();
     		} else { 
     			// Validate the json file
-    			//System.out.println("last options else");
     			System.out.println(JsonSchemaValidation.validateJson(path));
     			// Finished, go to main
     			initialInput();
@@ -131,7 +128,6 @@ public class XJconverter
     	String path = fileName + "." + type;
     	if(type == "xml") { // Is to be xml file
 	    	String fileEncoded = ("<?xml version = \"1.0\" encoding = \"ISO-8859-1\" ?>").concat(fileContent);
-	    	//System.out.println(fileEncoded);
 	    	FileOutputStream outFile = new FileOutputStream(path);	 
 	    	outFile.write(fileEncoded.getBytes());
 	    	outFile.close();

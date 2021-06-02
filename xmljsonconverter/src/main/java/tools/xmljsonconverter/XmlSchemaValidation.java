@@ -13,16 +13,22 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+/*
+ * Validates the converted xml address book file against the xsd schema
+ */
 public class XmlSchemaValidation {
 	    
 	    public static boolean validateXML(String xmlFilePath){
+	    	// Get the xsd schema file
 	    	String xsdSchema = "xmlSchema.xsd";
-	    	//System.out.println(xmlFilePath);
-	        try {
+	    	
+	    	// Prepare the validator using the xsd schema
+	    	try {
 	            SchemaFactory factory =
 	                    SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 	            Schema schema = factory.newSchema(new File(xsdSchema));
 	            Validator validator = schema.newValidator();
+	            // Then validate outputting any errors
 	            validator.setErrorHandler(new ErrorHandler()
 	            {
 
